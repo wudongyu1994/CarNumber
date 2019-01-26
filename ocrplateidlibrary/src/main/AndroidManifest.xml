@@ -39,7 +39,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.kernal.plateid.MainActivity"
+            android:name="com.kernal.plateid.CreateActivity"
+            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
             >
@@ -48,7 +49,16 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".OutFormActivity"
+            android:screenOrientation="portrait">
 
+        </activity>
+        <activity android:name=".GoodsInWarehouseActivity">
+
+        </activity>
+        <activity android:name=".DistributionActivity">
+
+        </activity>
         <service
             android:name="com.kernal.plateid.AuthService"
             android:enabled="true" >

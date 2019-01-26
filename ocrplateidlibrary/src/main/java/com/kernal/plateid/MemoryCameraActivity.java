@@ -99,7 +99,7 @@ public class MemoryCameraActivity extends Activity {
 			take_pic.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					// TODO Auto-generated method stub
+					//   Auto-generated method stub
 					fragment.setRecogModle(true,true);
 				}
 
@@ -108,7 +108,7 @@ public class MemoryCameraActivity extends Activity {
 	}
 	@SuppressLint("NewApi")
 	private void findiew() {
-		// TODO Auto-generated method stub
+		//   Auto-generated method stub
 		flash_btn = (ImageButton) findViewById(R.id.flash_camera);
 		back = (ImageButton) findViewById(R.id.back);
 		take_pic = (ImageButton) findViewById(R.id.take_pic_btn);
@@ -211,8 +211,8 @@ public class MemoryCameraActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub\
-				fragment.backLastActivtiy();
+				//   Auto-generated method stub\
+				finish();
 
 			}
 		});
@@ -222,7 +222,7 @@ public class MemoryCameraActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// b = true;
-				// TODO Auto-generated method stub
+				//   Auto-generated method stub
 				fragment.setFlash();
 
 			}
@@ -337,7 +337,7 @@ public class MemoryCameraActivity extends Activity {
 	/**
 	 * 拿到结果之后的处理逻辑
 	 * @Title: getResult
-	 * @Description: TODO(获取结果)
+	 * @Description:  (获取结果)
 	 * @param @param fieldvalue 调用识别接口返回的数据
 	 * @return void 返回类型
 	 * @throwsbyte[]picdata
@@ -445,13 +445,13 @@ public class MemoryCameraActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			fragment.backLastActivtiy();
+			finish();
 		}
 		return super.onKeyDown(keyCode, event);
 	}
 	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
+		//   Auto-generated method stub
 		if (sensorManager != null) {
 			sensorManager.unregisterListener(listener);
 		}

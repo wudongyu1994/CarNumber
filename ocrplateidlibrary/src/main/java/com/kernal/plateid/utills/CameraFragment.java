@@ -323,7 +323,7 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback {
      * 返回按钮触发事件
      */
     public  void backLastActivtiy() {
-        // TODO Auto-generated method stub
+        //   Auto-generated method stub
         this.cameraManager.previewCallback.issuspended=true;
         Intent intent  = new Intent("kernal.plateid.MainActivity");
         startActivity(intent);
