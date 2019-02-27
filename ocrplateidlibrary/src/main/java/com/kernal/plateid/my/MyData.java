@@ -9,12 +9,14 @@ import java.util.ArrayList;
 
 public final class MyData {
     private static ArrayList<Good> goodsOut;
+    private static ArrayList<Good> goodsDetail=new ArrayList<>();
+
     private static ArrayList<Good> goodsInstore;
+
     private static ArrayList<Project> projects;
     private static ArrayList<Warehouse> warehouses;
     private static ArrayList<Truck> trucks;
     private static ArrayList<Staff> staff;
-
     public static boolean hasTruck(String s){
         for(Truck truck:trucks){
             if(truck.getName().equals(s)){
@@ -22,6 +24,16 @@ public final class MyData {
             }
         }
         return false;
+    }
+
+    public static ArrayList<Good> getGoodsDetail() {
+//        if(goodsDetail.isEmpty() )
+//            return null;
+        return goodsDetail;
+    }
+
+    public static void addGoodsDetail(Good good){
+        goodsDetail.add(good);
     }
 
     public static ArrayList<Good> getGoodsInStore() {
@@ -64,7 +76,30 @@ public final class MyData {
         warehouses=new ArrayList<>();
         warehouses.add(new Warehouse("浙江杭州","Ware 1",11));
         warehouses.add(new Warehouse("上海","Ware 2",22));
-        warehouses.add(new Warehouse("江苏南京","Ware 3",33));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",333));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",334));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",335));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",336));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",337));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",338));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",339));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",340));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",341));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",342));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",343));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",344));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",345));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",346));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",347));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",348));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",349));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",350));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",351));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",352));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",353));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",354));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",355));
+        warehouses.add(new Warehouse("江苏南京","Ware 3",356));
         return warehouses;
     }
 

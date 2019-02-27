@@ -9,14 +9,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -26,7 +24,6 @@ import com.kernal.plateid.adapter.StaffAdapter;
 import com.kernal.plateid.adapter.TruckAdapter;
 import com.kernal.plateid.adapter.WarehouseAdapter;
 import com.kernal.plateid.my.MyData;
-import com.kernal.plateid.my.MyMethod;
 import com.kernal.plateid.objects.Project;
 import com.kernal.plateid.objects.Staff;
 import com.kernal.plateid.objects.Truck;
@@ -34,7 +31,6 @@ import com.kernal.plateid.objects.Warehouse;
 import com.kernal.plateid.utills.CheckPermission;
 import com.kernal.plateid.utills.PermissionActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CreateActivity extends AppCompatActivity implements OnClickListener {
@@ -99,7 +95,7 @@ public class CreateActivity extends AppCompatActivity implements OnClickListener
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.create_out_form);
+        setContentView(R.layout.out_form_create);
         getAllView();    //找到指定的xml控件
         listWarehouse=MyData.getWarehouses();
         listProject=MyData.getProjects();
@@ -188,7 +184,7 @@ public class CreateActivity extends AppCompatActivity implements OnClickListener
             editor.putInt("truck",truckId);
             editor.putInt("staff",staffId);
             editor.apply();
-            Toast.makeText(CreateActivity.this,""+projectId+"\n"+warehouseId+"\n"+truckId+"\n"+staffId+"\n",Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateActivity.this,"\n"+projectId+"\n"+warehouseId+"\n"+truckId+"\n"+staffId+"\n",Toast.LENGTH_SHORT).show();
             //todo 关闭当前activity，添加部分数据，跳转到OutformActivity
             Intent intent=new Intent(CreateActivity.this, OutFormActivity.class);
             startActivity(intent);

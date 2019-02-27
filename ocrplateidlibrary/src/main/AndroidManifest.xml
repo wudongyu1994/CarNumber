@@ -59,6 +59,9 @@
         <activity android:name=".DistributionActivity">
 
         </activity>
+        <activity android:name=".DetailActivity">
+
+        </activity>
         <service
             android:name="com.kernal.plateid.AuthService"
             android:enabled="true" >

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
+import com.kernal.plateid.adapter.GoodAdapter;
 import com.kernal.plateid.interfacee.ListItemClickListener;
 import com.kernal.plateid.my.Good;
 import com.kernal.plateid.my.MyData;

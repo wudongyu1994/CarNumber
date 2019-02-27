@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "com.kernal.demo.plateid"
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 28
         versionCode 1
         versionName "1.3.1.0"
     }
@@ -21,7 +21,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
-    implementation ('com.android.support:appcompat-v7:25.4.0')//{ exclude group: "com.android.support", module: "support-v4" }
+    implementation ('com.android.support:appcompat-v7:28.0.0')//{ exclude group: "com.android.support", module: "support-v4" }
     implementation project(':ocrplateidlibrary')
 //    compile fileTree(dir: 'libs', include: ['*.jar'])
 //    testCompile 'junit:junit:4.12'

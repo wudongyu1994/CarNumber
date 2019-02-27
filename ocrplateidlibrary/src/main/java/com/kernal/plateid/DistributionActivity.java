@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.kernal.plateid.adapter.GoodDisAdapter;
 import com.kernal.plateid.interfacee.ListItemClickListener;
 import com.kernal.plateid.my.Good;
 import com.kernal.plateid.my.MyData;
@@ -64,9 +65,7 @@ public class DistributionActivity extends AppCompatActivity implements ListItemC
                     public void onClick(DialogInterface dialog, int which) {
                         //todo use api to add detail
                         mAdapter.remove(position);
-//                        goodsOut.remove(position);
-//                        mAdapter.changeGoods(goodsOut);
-//                        mAdapter.notifyDataSetChanged();
+
                     }
                 });
         builder.setNegativeButton("关闭",

@@ -1,4 +1,4 @@
-package com.kernal.plateid;
+package com.kernal.plateid.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.kernal.plateid.R;
 import com.kernal.plateid.interfacee.ListItemClickListener;
 import com.kernal.plateid.my.Good;
 
@@ -35,7 +36,7 @@ public class GoodAdapter extends RecyclerView.Adapter<GoodAdapter.GoodViewHolder
     @Override
     public GoodViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view=LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.good_in_store_list_item,parent,false);
+                .inflate(R.layout.goods_in_store_list_item,parent,false);
         GoodViewHolder viewHolder=new GoodViewHolder(view);
         return viewHolder;
     }

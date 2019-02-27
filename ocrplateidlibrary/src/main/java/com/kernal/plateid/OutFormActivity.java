@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.kernal.plateid.adapter.ProjectAdapter;
 import com.kernal.plateid.adapter.StaffAdapter;
@@ -33,7 +34,7 @@ import static com.kernal.plateid.CreateActivity.PERMISSION;
 public class OutFormActivity extends AppCompatActivity implements View.OnClickListener {
     private final static String TAG=OutFormActivity.class.getSimpleName();
     private Spinner mProject,mWarehouse,mTruck,mStaff;
-    private Button mScan,mSearchGoods,mShowList,mShowContract,mChange,mFinish;
+    private Button mScan,mSearchGoods,mShowList,mShowContract,mChange,mFinish,mDetail;
     List<Project> listProject;
     List<Warehouse> listWarehouse;
     List<Truck> listTruck;
@@ -76,7 +77,7 @@ public class OutFormActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void getAllView(){
-        mWarehouse=(Spinner)findViewById(R.id.sp_warehouse);
+        mWarehouse=(Spinner)this.findViewById(R.id.sp_warehouse);
         mProject=(Spinner)findViewById(R.id.sp_project);
         mTruck=(Spinner)findViewById(R.id.sp_truck);
         mStaff =(Spinner)findViewById(R.id.sp_pick_worker);
@@ -86,6 +87,7 @@ public class OutFormActivity extends AppCompatActivity implements View.OnClickLi
         mShowContract=(Button)findViewById(R.id.btn_show_contract);
         mChange=(Button)findViewById(R.id.btn_change);
         mFinish=(Button)findViewById(R.id.btn_finish);
+        mDetail=(Button)findViewById(R.id.btn_detail);
 
         mScan.setOnClickListener(this);
         mSearchGoods.setOnClickListener(this);
@@ -93,6 +95,7 @@ public class OutFormActivity extends AppCompatActivity implements View.OnClickLi
         mShowContract.setOnClickListener(this);
         mChange.setOnClickListener(this);
         mFinish.setOnClickListener(this);
+        mDetail.setOnClickListener(this);
     }
 
     @Override
@@ -125,9 +128,10 @@ public class OutFormActivity extends AppCompatActivity implements View.OnClickLi
         }else if(v.getId()==R.id.btn_change){
 
         }else if(v.getId()==R.id.btn_finish){
-
+            finish();
         }else if(v.getId()==R.id.btn_detail){
-
+            Intent intent=new Intent(OutFormActivity.this,DetailActivity.class);
+            startActivity(intent);
         }
     }
 

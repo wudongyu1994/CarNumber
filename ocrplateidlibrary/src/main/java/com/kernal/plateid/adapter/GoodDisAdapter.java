@@ -1,4 +1,4 @@
-package com.kernal.plateid;
+package com.kernal.plateid.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.kernal.plateid.R;
 import com.kernal.plateid.interfacee.ListItemClickListener;
 import com.kernal.plateid.my.Good;
+import com.kernal.plateid.my.MyData;
 
 import java.util.ArrayList;
 
@@ -20,6 +22,7 @@ public class GoodDisAdapter extends RecyclerView.Adapter<GoodDisAdapter.GoodDisV
         listItemClickListener=listener;
     }
     public void remove(int position){
+        MyData.addGoodsDetail(mGoods.get(position));
         mGoods.remove(position);
         notifyDataSetChanged();
     }
