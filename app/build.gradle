@@ -27,12 +27,13 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
-    implementation ('com.android.support:appcompat-v7:28.0.0')//{ exclude group: "com.android.support", module: "support-v4" }
-    implementation project(':ocrplateidlibrary')
-//    compile fileTree(dir: 'libs', include: ['*.jar'])
-//    testCompile 'junit:junit:4.12'
-//    compile ('com.android.support:appcompat-v7:23.3.0'){ exclude group: "com.android.support", module: "support-v4" }
-//    compile project(':ocrplateidlibrary')
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    //{ exclude group: "com.android.support", module: "support-v4" }
+    //    compile fileTree(dir: 'libs', include: ['*.jar'])
+    //    testCompile 'junit:junit:4.12'
+    //    compile ('com.android.support:appcompat-v7:23.3.0'){ exclude group: "com.android.support", module: "support-v4" }
+    //    compile project(':ocrplateidlibrary')
+    implementation project(':loginapp')
 }

@@ -3,23 +3,18 @@ package com.kernal.demo.plateid;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 
-import com.kernal.plateid.CreateActivity;
-import com.kernal.plateid.MemoryCameraActivity;
-
-import com.kernal.plateid.utills.CheckPermission;
-import com.kernal.plateid.utills.PermissionActivity;
+import com.wdy.login.LoginActivity;
 
 public class MainActivity01 extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         //跳转到demo主界面
-        Intent intent  = new Intent(MainActivity01.this, CreateActivity.class);
+        Intent intent  = new Intent(MainActivity01.this, LoginActivity.class);
         finish();
         startActivity(intent);
     }
