@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.kernal.plateid.R;
 import com.kernal.plateid.interfacee.ListItemClickListener;
-import com.kernal.plateid.my.Good;
+import com.kernal.plateid.objects.Good;
 
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class GoodAdapter extends RecyclerView.Adapter<GoodAdapter.GoodViewHolder
     @Override
     public void onBindViewHolder(GoodViewHolder holder, int position) {
         holder.mName.setText(mGoods.get(position).getName());
-        holder.mWarehouse.setText(mGoods.get(position).getWarehouse());
+        holder.mWarehouse.setText("仓库"+mGoods.get(position).getWarehouse());
     }
 
     @Override

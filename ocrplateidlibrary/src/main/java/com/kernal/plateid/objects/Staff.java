@@ -1,47 +1,80 @@
 package com.kernal.plateid.objects;
 
 public class Staff extends SCItem{
-    private String name;
+    private String passWord,phone,dept,userName;
+    private boolean ifDeleted;
+    private long createTime,updateTime;
+    private int corporation,userId;
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String getPassWord() {
+        return passWord;
+    }
+
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getDept() {
+        return dept;
+    }
+
+    public void setDept(String dept) {
+        this.dept = dept;
     }
 
     public String getUserName() {
         return userName;
     }
 
-    private String userName;
-    private int id;
-
-    public Staff( String userName,String name, int id) {
-        this.name = name;
+    public void setUserName(String userName) {
         this.userName = userName;
-        this.id = id;
     }
 
-    public Staff(String name, int id) {
-        this.name = name;
-        this.id = id;
+    public boolean isIfDeleted() {
+        return ifDeleted;
     }
 
-    public Staff(String name) {
-        this.name = name;
+    public void setIfDeleted(boolean ifDeleted) {
+        this.ifDeleted = ifDeleted;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public long getCreateTime() {
+        return createTime;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
     }
 
-    public String getName() {
-        return name;
+    public long getUpdateTime() {
+        return updateTime;
     }
 
-    public int getId() {
-        return id;
+    public void setUpdateTime(long updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public int getCorporation() {
+        return corporation;
+    }
+
+    public void setCorporation(int corporation) {
+        this.corporation = corporation;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

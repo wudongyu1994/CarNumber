@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.kernal.plateid.R;
 import com.kernal.plateid.interfacee.ListItemClickListener;
-import com.kernal.plateid.my.Good;
+import com.kernal.plateid.objects.Good;
 import com.kernal.plateid.my.MyData;
 
 import java.util.ArrayList;
@@ -21,10 +21,12 @@ public class GoodDisAdapter extends RecyclerView.Adapter<GoodDisAdapter.GoodDisV
         mGoods=goods;
         listItemClickListener=listener;
     }
-    public void remove(int position){
-        MyData.addGoodsDetail(mGoods.get(position));
+    public Good remove(int position){
+        Good rmGood=mGoods.get(position);
+        MyData.addGoodsDetail(rmGood);
         mGoods.remove(position);
         notifyDataSetChanged();
+        return rmGood;
     }
     public String getName(int position){
         return mGoods.get(position).getName();
@@ -39,7 +41,7 @@ public class GoodDisAdapter extends RecyclerView.Adapter<GoodDisAdapter.GoodDisV
 
     @Override
     public void onBindViewHolder(GoodDisViewHolder holder, int position) {
-        holder.mWarehouse.setText(mGoods.get(position).getWarehouse());
+        holder.mWarehouse.setText("仓库"+mGoods.get(position).getWarehouse());
         holder.mName.setText(mGoods.get(position).getName());
     }
 

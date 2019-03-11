@@ -1,47 +1,56 @@
 package com.kernal.plateid.objects;
 
 public class Truck extends SCItem {
-    private String carNumber,name;
-    private int id;
+    private String carNumber,phone;
+    private int corporation;
+    private long createTime,updateTime;
+    private boolean ifDeleted;
 
-    public Truck(String name) {
-        this.name = name;
-    }
-
-    public Truck(String carNumber, String name) {
-        this.carNumber = carNumber;
-        this.name = name;
-    }
-
-    public Truck(String carNumber, String name, int id) {
-        this.carNumber = carNumber;
-        this.name = name;
-        this.id = id;
+    public String getCarNumber() {
+        return carNumber;
     }
 
     public void setCarNumber(String carNumber) {
         this.carNumber = carNumber;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getPhone() {
+        return phone;
     }
 
-    public String getCarNumber() {
-        return carNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public int getId() {
-        return id;
+    public int getCorporation() {
+        return corporation;
     }
 
-    @Override
-    public void setName(String name) {
-        this.name = name;
+    public void setCorporation(int corporation) {
+        this.corporation = corporation;
     }
 
-    @Override
-    public String getName() {
-        return name;
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+
+    public long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(long updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public boolean isIfDeleted() {
+        return ifDeleted;
+    }
+
+    public void setIfDeleted(boolean ifDeleted) {
+        this.ifDeleted = ifDeleted;
     }
 }

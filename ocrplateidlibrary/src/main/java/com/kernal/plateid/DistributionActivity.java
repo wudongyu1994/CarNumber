@@ -1,21 +1,36 @@
 package com.kernal.plateid;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.TypeReference;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.kernal.plateid.adapter.GoodDisAdapter;
+import com.kernal.plateid.adapter.TruckAdapter;
 import com.kernal.plateid.interfacee.ListItemClickListener;
-import com.kernal.plateid.my.Good;
+import com.kernal.plateid.javabean.FastJsonReturn;
+import com.kernal.plateid.my.MySingleton;
+import com.kernal.plateid.objects.Good;
 import com.kernal.plateid.my.MyData;
+import com.kernal.plateid.objects.Truck;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DistributionActivity extends AppCompatActivity implements ListItemClickListener {
     private final static String TAG=DistributionActivity.class.getSimpleName();
@@ -24,12 +39,15 @@ public class DistributionActivity extends AppCompatActivity implements ListItemC
     private RecyclerView mRecyclerView;
     private GoodDisAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private int outStorageId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.distribution_form);
         getAllView();
         goodsOut=MyData.getGoodsOut();
+        SharedPreferences sharedPreferences=getSharedPreferences("zju",MODE_PRIVATE);
+        outStorageId=sharedPreferences.getInt("outStorageId",1);
 
         mLayoutManager=new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -64,7 +82,39 @@ public class DistributionActivity extends AppCompatActivity implements ListItemC
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //todo use api to add detail
-                        mAdapter.remove(position);
+                        final Good rmGood=mAdapter.remove(position);
+                        //使用post 添加出库单明细
+                        String url = "http://120.76.219.196:8082/ScsyERP/OutStorageForm/addProduct";
+                        StringRequest requestProject = new StringRequest(Request.Method.POST, url,
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String s) {
+                                        Log.d(TAG,s);
+                                        FastJsonReturn fastJsonReturn = JSON.parseObject(s, FastJsonReturn.class);
+                                        int status=fastJsonReturn.getStatus();
+                                        if(status!=0){
+                                            Toast.makeText(DistributionActivity.this,"\nadd product failed!",Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e(TAG,error.toString());
+                            }
+                        }) {
+                            // 携带参数
+                            @Override
+                            protected HashMap<String, String> getParams()
+                                    throws AuthFailureError {
+                                HashMap<String, String> hashMap = new HashMap<String, String>();
+                                hashMap.put("outStorageForm", ""+outStorageId);
+                                hashMap.put("product", ""+rmGood.getId());
+                                Log.d(TAG,hashMap.toString());
+                                return hashMap;
+                            }
+                        };
+                        MySingleton.getInstance(DistributionActivity.this).addToRequestQueue(requestProject);
+                        //END：使用post 添加出库单明细
 
                     }
                 });

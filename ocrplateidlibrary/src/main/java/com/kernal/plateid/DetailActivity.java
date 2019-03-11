@@ -1,19 +1,15 @@
 package com.kernal.plateid;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.kernal.plateid.adapter.GoodDisAdapter;
 import com.kernal.plateid.interfacee.ListItemClickListener;
-import com.kernal.plateid.my.Good;
+import com.kernal.plateid.objects.Good;
 import com.kernal.plateid.my.MyData;
 
 import java.util.ArrayList;

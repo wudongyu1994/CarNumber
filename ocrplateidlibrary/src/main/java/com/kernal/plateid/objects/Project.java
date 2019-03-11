@@ -1,102 +1,91 @@
 package com.kernal.plateid.objects;
 
+import com.alibaba.fastjson.JSONArray;
+
 public class Project extends SCItem{
-    private String projectNumber,name;
-    private int id,admin,consignee,corporation,customer,manufacturer;
+    private String projectNumber;
+    private int admin,consignee,corporation,customer,manufacturer;
     private long createTime,updateTime;
     private boolean ifDeleted;
+    private JSONArray materials;
 
-    public Project(String projectNumber, String name, int id) {
-        this.projectNumber = projectNumber;
-        this.name = name;
-        this.id = id;
+    public String getProjectNumber() {
+        return projectNumber;
     }
 
     public void setProjectNumber(String projectNumber) {
         this.projectNumber = projectNumber;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public int getAdmin() {
+        return admin;
     }
 
     public void setAdmin(int admin) {
         this.admin = admin;
     }
 
-    public void setConsignee(int consignee) {
-        this.consignee = consignee;
-    }
-
-    public void setCorporation(int corporation) {
-        this.corporation = corporation;
-    }
-
-    public void setCustomer(int customer) {
-        this.customer = customer;
-    }
-
-    public void setManufacturer(int manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    public void setCreateTime(long createTime) {
-        this.createTime = createTime;
-    }
-
-    public void setUpdateTime(long updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public void setIfDeleted(boolean ifDeleted) {
-        this.ifDeleted = ifDeleted;
-    }
-
-    public String getProjectNumber() {
-        return projectNumber;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public int getAdmin() {
-        return admin;
-    }
-
     public int getConsignee() {
         return consignee;
+    }
+
+    public void setConsignee(int consignee) {
+        this.consignee = consignee;
     }
 
     public int getCorporation() {
         return corporation;
     }
 
+    public void setCorporation(int corporation) {
+        this.corporation = corporation;
+    }
+
     public int getCustomer() {
         return customer;
+    }
+
+    public void setCustomer(int customer) {
+        this.customer = customer;
     }
 
     public int getManufacturer() {
         return manufacturer;
     }
 
+    public void setManufacturer(int manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
     public long getCreateTime() {
         return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
     }
 
     public long getUpdateTime() {
         return updateTime;
     }
 
+    public void setUpdateTime(long updateTime) {
+        this.updateTime = updateTime;
+    }
+
     public boolean isIfDeleted() {
         return ifDeleted;
+    }
+
+    public void setIfDeleted(boolean ifDeleted) {
+        this.ifDeleted = ifDeleted;
+    }
+
+    public JSONArray getMaterials() {
+        return materials;
+    }
+
+    public void setMaterials(JSONArray materials) {
+        this.materials = materials;
     }
 }

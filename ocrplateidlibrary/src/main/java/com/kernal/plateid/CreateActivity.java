@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,11 +20,21 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.TypeReference;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.kernal.plateid.adapter.ProjectAdapter;
 import com.kernal.plateid.adapter.StaffAdapter;
 import com.kernal.plateid.adapter.TruckAdapter;
 import com.kernal.plateid.adapter.WarehouseAdapter;
+import com.kernal.plateid.javabean.FastJsonReturn;
 import com.kernal.plateid.my.MyData;
+import com.kernal.plateid.my.MySingleton;
 import com.kernal.plateid.objects.Project;
 import com.kernal.plateid.objects.Staff;
 import com.kernal.plateid.objects.Truck;
@@ -31,6 +42,8 @@ import com.kernal.plateid.objects.Warehouse;
 import com.kernal.plateid.utills.CheckPermission;
 import com.kernal.plateid.utills.PermissionActivity;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class CreateActivity extends AppCompatActivity implements OnClickListener {
@@ -41,10 +54,10 @@ public class CreateActivity extends AppCompatActivity implements OnClickListener
 
     private Spinner mWarehouse,mProject,mTruck,mStaff;
     private Button mScan,mCreate;
-    List<Project> listProject;
-    List<Warehouse> listWarehouse;
-    List<Truck> listTruck;
-    List<Staff> listStaff;
+    List<Project> listProject=new ArrayList<>();
+    List<Warehouse> listWarehouse=new ArrayList<>();
+    List<Truck> listTruck=new ArrayList<>();
+    List<Staff> listStaff=new ArrayList<>();
     ProjectAdapter projectAdapter;
     WarehouseAdapter warehouseAdapter;
     TruckAdapter truckAdapter;
@@ -90,6 +103,9 @@ public class CreateActivity extends AppCompatActivity implements OnClickListener
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StringRequest requestProject;
+        String url;
+
         super.onCreate(savedInstanceState);
 
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -97,51 +113,128 @@ public class CreateActivity extends AppCompatActivity implements OnClickListener
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.out_form_create);
         getAllView();    //找到指定的xml控件
-        listWarehouse=MyData.getWarehouses();
-        listProject=MyData.getProjects();
-        listTruck=MyData.getTrucks();
-        listStaff=MyData.getStaff();
-        warehouseAdapter=new WarehouseAdapter(listWarehouse,this);
-        projectAdapter=new ProjectAdapter(listProject,this);
-        truckAdapter=new TruckAdapter(listTruck,this);
-        staffAdapter=new StaffAdapter(listStaff,this);
-        mWarehouse.setAdapter(warehouseAdapter);
-        mProject.setAdapter(projectAdapter);
-        mTruck.setAdapter(truckAdapter);
-        mStaff.setAdapter(staffAdapter);
-        mWarehouse.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                warehouseId=warehouseAdapter.getObjectId(i);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-        });
 
-        mProject.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                projectId=projectAdapter.getObjectId(i);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-        });
-        mTruck.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                truckId=truckAdapter.getObjectId(i);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-        });
-        mStaff.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                staffId=staffAdapter.getObjectId(i);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-        });
+        //获取warehouse列表
+        url = "http://120.76.219.196:8082/ScsyERP/BasicInfo/Warehouse/query";
+        requestProject = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {//s为请求返回的字符串数据
+                        Log.d(TAG,s);
+                        FastJsonReturn fastJsonReturn = JSON.parseObject(s, FastJsonReturn.class);
+                        JSONArray jsonArray=fastJsonReturn.getContent().getJSONArray("data");
+                        listWarehouse=JSON.parseObject(JSON.toJSONString(jsonArray),new TypeReference<ArrayList<Warehouse>>() {});
+                        warehouseAdapter=new WarehouseAdapter(listWarehouse,CreateActivity.this);
+                        mWarehouse.setAdapter(warehouseAdapter);
+                        mWarehouse.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                warehouseId=warehouseAdapter.getObjectId(i);
+                            }
+                            @Override
+                            public void onNothingSelected(AdapterView<?> adapterView) {}
+                        });
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.e(TAG,volleyError.toString());
+                    }
+                }){};
+        MySingleton.getInstance(this).addToRequestQueue(requestProject);
+
+        //获取project列表
+        url = "http://120.76.219.196:8082/ScsyERP/BasicInfo/Project/query";
+        requestProject = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {//s为请求返回的字符串数据
+                        Log.d(TAG,s);
+                        FastJsonReturn fastJsonReturn = JSON.parseObject(s, FastJsonReturn.class);
+                        JSONArray jsonArray=fastJsonReturn.getContent().getJSONArray("data");
+                        listProject=JSON.parseObject(JSON.toJSONString(jsonArray),new TypeReference<ArrayList<Project>>() {});
+                        projectAdapter=new ProjectAdapter(listProject,CreateActivity.this);
+                        mProject.setAdapter(projectAdapter);
+                        mProject.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                projectId=projectAdapter.getObjectId(i);
+                            }
+                            @Override
+                            public void onNothingSelected(AdapterView<?> adapterView) {}
+                        });
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.e(TAG,volleyError.toString());
+                    }
+                }){};
+        MySingleton.getInstance(this).addToRequestQueue(requestProject);
+
+        //获取truck列表
+        url = "http://120.76.219.196:8082/ScsyERP/BasicInfo/Truck/query";
+        requestProject = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {//s为请求返回的字符串数据
+                        Log.d(TAG,s);
+                        FastJsonReturn fastJsonReturn = JSON.parseObject(s, FastJsonReturn.class);
+                        JSONArray jsonArray=fastJsonReturn.getContent().getJSONArray("data");
+                        listTruck=JSON.parseObject(JSON.toJSONString(jsonArray),new TypeReference<ArrayList<Truck>>() {});
+                        truckAdapter=new TruckAdapter(listTruck,CreateActivity.this);
+                        mTruck.setAdapter(truckAdapter);
+                        mTruck.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                truckId=truckAdapter.getObjectId(i);
+                            }
+                            @Override
+                            public void onNothingSelected(AdapterView<?> adapterView) {}
+                        });
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.e(TAG,volleyError.toString());
+                    }
+                }){};
+        MySingleton.getInstance(this).addToRequestQueue(requestProject);
+
+        //获取staff列表
+        url = "http://120.76.219.196:8082/ScsyERP/BasicInfo/Admin/query";
+        requestProject = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {//s为请求返回的字符串数据
+                        Log.d(TAG,s);
+                        FastJsonReturn fastJsonReturn = JSON.parseObject(s, FastJsonReturn.class);
+                        JSONArray jsonArray=fastJsonReturn.getContent().getJSONArray("data");
+                        listStaff=JSON.parseObject(JSON.toJSONString(jsonArray),new TypeReference<ArrayList<Staff>>() {});
+                        staffAdapter=new StaffAdapter(listStaff,CreateActivity.this);
+                        mStaff.setAdapter(staffAdapter);
+                        mStaff.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                staffId=staffAdapter.getObjectId(i);
+                            }
+                            @Override
+                            public void onNothingSelected(AdapterView<?> adapterView) {}
+                        });
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.e(TAG,volleyError.toString());
+                    }
+                }){};
+        MySingleton.getInstance(this).addToRequestQueue(requestProject);
+
+
     }
 
     private void getAllView() {
@@ -177,15 +270,49 @@ public class CreateActivity extends AppCompatActivity implements OnClickListener
             }
         } else if (v.getId()==R.id.btn_create) {
             //TODO 创建出库单
+            //使用post 创建出库单
+            String url = "http://120.76.219.196:8082/ScsyERP/OutStorageForm/create";
+            StringRequest requestProject = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
+                            Log.d(TAG,s);
+                            FastJsonReturn fastJsonReturn = JSON.parseObject(s, FastJsonReturn.class);
+                            int status=fastJsonReturn.getStatus();
+                            if(status!=0){
+                                Toast.makeText(CreateActivity.this,"\ncreate outForm failed!",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e(TAG,error.toString());
+                }
+            }) {
+                // 携带参数
+                @Override
+                protected HashMap<String, String> getParams()
+                        throws AuthFailureError {
+                    HashMap<String, String> hashMap = new HashMap<String, String>();
+                    hashMap.put("corporation", ""+1);
+                    hashMap.put("warehouse", ""+warehouseId);
+                    hashMap.put("project", ""+projectId);
+                    hashMap.put("truck", ""+truckId);
+                    hashMap.put("lister", ""+staffId);
+                    hashMap.put("pickWorker", ""+staffId);
+                    return hashMap;
+                }
+            };
+            MySingleton.getInstance(CreateActivity.this).addToRequestQueue(requestProject);
+
             SharedPreferences sharedPreferences=getSharedPreferences("zju",MODE_PRIVATE);
             SharedPreferences.Editor editor =sharedPreferences.edit();
-            editor.putInt("project",projectId);
             editor.putInt("warehouse",warehouseId);
+            editor.putInt("project",projectId);
             editor.putInt("truck",truckId);
             editor.putInt("staff",staffId);
             editor.apply();
-            Toast.makeText(CreateActivity.this,"\n"+projectId+"\n"+warehouseId+"\n"+truckId+"\n"+staffId+"\n",Toast.LENGTH_SHORT).show();
-            //todo 关闭当前activity，添加部分数据，跳转到OutformActivity
+            Toast.makeText(CreateActivity.this,"\n"+warehouseId+"\n"+projectId+"\n"+truckId+"\n"+staffId+"\n",Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(CreateActivity.this, OutFormActivity.class);
             startActivity(intent);
             finish();
@@ -196,9 +323,77 @@ public class CreateActivity extends AppCompatActivity implements OnClickListener
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 4 && resultCode == 4) {
-            String carNumber = data.getStringExtra("number");
-            //todo choose a car or create a car
+            final String carNumber = data.getStringExtra("number");
+            boolean hasCar=false;
+            int i;
+            for(i=0;i<listTruck.size();i++){
+                if(listTruck.get(i).getCarNumber().equals(carNumber)){
+                    hasCar=true;
+                    break;
+                }
+            }
+            if(hasCar){
+                mTruck.setSelection(i);
+                Toast.makeText(this,"truck: "+i,Toast.LENGTH_SHORT).show();
+            }
+            else{
+                //TODO 创建卡车
+                //使用post创建新的truck
+                String url = "http://120.76.219.196:8082/ScsyERP/BasicInfo/Truck/create";
+                StringRequest requestProject = new StringRequest(Request.Method.POST, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String s) {
+                                Log.d(TAG,s);
+                                FastJsonReturn fastJsonReturn = JSON.parseObject(s, FastJsonReturn.class);
+                                int status=fastJsonReturn.getStatus();
+                                if(status!=0){
+                                    Toast.makeText(CreateActivity.this,"\ncreate truck failed! please try again!",Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    //重新获取trucks，并显示最后一辆truck
+                                    String url = "http://120.76.219.196:8082/ScsyERP/BasicInfo/Truck/query";
+                                    StringRequest requestProject = new StringRequest(Request.Method.GET, url,
+                                            new Response.Listener<String>() {
+                                                @Override
+                                                public void onResponse(String s) {//s为请求返回的字符串数据
+                                                    Log.d(TAG,s);
+                                                    FastJsonReturn fastJsonReturn = JSON.parseObject(s, FastJsonReturn.class);
+                                                    JSONArray jsonArray=fastJsonReturn.getContent().getJSONArray("data");
+                                                    listTruck=JSON.parseObject(JSON.toJSONString(jsonArray),new TypeReference<ArrayList<Truck>>() {});
+                                                    truckAdapter=new TruckAdapter(listTruck,CreateActivity.this);
+                                                    mTruck.setAdapter(truckAdapter);
+                                                    mTruck.setSelection(truckAdapter.getCount()-1);
+                                                }
+                                            },
+                                            new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError volleyError) {
+                                                    Log.e(TAG,volleyError.toString());
+                                                }
+                                            }){};
+                                    MySingleton.getInstance(CreateActivity.this).addToRequestQueue(requestProject);
 
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG,error.toString());
+                    }
+                }) {
+                    // 携带参数
+                    @Override
+                    protected HashMap<String, String> getParams()
+                            throws AuthFailureError {
+                        HashMap<String, String> hashMap = new HashMap<String, String>();
+                        hashMap.put("corporation", "1");
+                        hashMap.put("carNumber", carNumber);
+                        return hashMap;
+                    }
+                };
+                MySingleton.getInstance(this).addToRequestQueue(requestProject);
+            }
         }
     }
 
