@@ -1,1 +1,1 @@
-include ':app', ':ocrplateidlibrary', ':loginapp'
+include ':app', ':outStorage', ':login', ':basicInfo'

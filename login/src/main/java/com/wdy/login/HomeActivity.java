@@ -8,10 +8,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.kernal.plateid.CreateActivity;
+import com.wdy.basicinfo.BasicActivity;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
     private final static String TAG= LoginActivity.class.getSimpleName();
     Button mOut,mIn,mFee,mInfo,mRoad,mData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         mData=findViewById(R.id.btn_data);
         mFee=findViewById(R.id.btn_fee);
 
+        mInfo.setOnClickListener(this);
         mOut.setOnClickListener(this);
         mFee.setOnClickListener(this);
     }
@@ -42,7 +45,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         if(v.getId()==R.id.btn_out){
             Intent intent=new Intent(HomeActivity.this, CreateActivity.class);
             startActivity(intent);
-            finish();
         }else if(v.getId()==R.id.btn_fee){
             SharedPreferences sharedPreferences=getSharedPreferences("login",MODE_PRIVATE);
             SharedPreferences.Editor editor =sharedPreferences.edit();
@@ -52,6 +54,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             editor.putInt("corporation",0);
             editor.apply();
             finish();
+        }else if(v.getId()==R.id.btn_basic_info){
+            Intent intent=new Intent(HomeActivity.this, BasicActivity.class);
+            startActivity(intent);
         }
     }
 }
