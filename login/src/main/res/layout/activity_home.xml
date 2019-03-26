@@ -9,11 +9,11 @@
         android:id="@+id/btn_basic_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
         android:text="基本信息"
-        app:layout_constraintBottom_toTopOf="@+id/btn_onroad"
+        app:layout_constraintBottom_toTopOf="@+id/btn_fee"
         app:layout_constraintEnd_toStartOf="@+id/btn_in"
         app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,55 +21,32 @@
         android:id="@+id/btn_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="0dp"
         android:text="入库"
+        app:layout_constraintBottom_toTopOf="@+id/btn_out"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_basic_info"
-        app:layout_constraintTop_toTopOf="@+id/btn_basic_info" />
-
-    <Button
-        android:id="@+id/btn_onroad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="在途监控"
-        app:layout_constraintBottom_toTopOf="@+id/btn_data"
-        app:layout_constraintEnd_toStartOf="@+id/btn_out"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_basic_info" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="0dp"
         android:text="出库"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_onroad"
-        app:layout_constraintTop_toTopOf="@+id/btn_onroad" />
-
-    <Button
-        android:id="@+id/btn_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="200dp"
-        android:text="数据统计"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_fee"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_onroad" />
+        app:layout_constraintStart_toEndOf="@+id/btn_fee"
+        app:layout_constraintTop_toBottomOf="@+id/btn_in" />
 
     <Button
         android:id="@+id/btn_fee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="0dp"
         android:text="费用结算"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_out"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_data"
-        app:layout_constraintTop_toTopOf="@+id/btn_data" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_basic_info" />
 </android.support.constraint.ConstraintLayout>

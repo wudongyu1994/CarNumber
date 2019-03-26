@@ -1,6 +1,6 @@
 package com.wdy.basicinfo;
 
 
-public interface TruckListItemClick{
+public interface ListItemClick {
     public void onListItemClick(int id);
 }

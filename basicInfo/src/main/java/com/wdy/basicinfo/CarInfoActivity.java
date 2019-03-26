@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -23,7 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarInfoActivity extends AppCompatActivity implements TruckListItemClick{
+public class CarInfoActivity extends AppCompatActivity implements ListItemClick {
     public static final String TAG = CarInfoActivity.class.getSimpleName();
 
     EditText mCarNumber,mCarLicense,mCarId;
@@ -36,7 +35,6 @@ public class CarInfoActivity extends AppCompatActivity implements TruckListItemC
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_info);
-
 
         mCarNumber=findViewById(R.id.et_car_number);
         mCarLicense=findViewById(R.id.et_car_license);

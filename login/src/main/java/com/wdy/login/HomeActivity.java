@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.kernal.plateid.CreateActivity;
 import com.wdy.basicinfo.BasicActivity;
+import com.wdy.list.Basic2Activity;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
     private final static String TAG= LoginActivity.class.getSimpleName();
@@ -30,9 +31,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private void getAllView(){
         mInfo=findViewById(R.id.btn_basic_info);
         mIn=findViewById(R.id.btn_in);
-        mRoad=findViewById(R.id.btn_onroad);
+//        mRoad=findViewById(R.id.btn_onroad);
         mOut=findViewById(R.id.btn_out);
-        mData=findViewById(R.id.btn_data);
+//        mData=findViewById(R.id.btn_data);
         mFee=findViewById(R.id.btn_fee);
 
         mInfo.setOnClickListener(this);
@@ -46,17 +47,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent=new Intent(HomeActivity.this, CreateActivity.class);
             startActivity(intent);
         }else if(v.getId()==R.id.btn_fee){
-            SharedPreferences sharedPreferences=getSharedPreferences("login",MODE_PRIVATE);
-            SharedPreferences.Editor editor =sharedPreferences.edit();
-            editor.putString("name","");
-            editor.putString("phone","");
-            editor.putString("userName","");
-            editor.putInt("corporation",0);
-            editor.apply();
-            finish();
+            Intent intent=new Intent(HomeActivity.this, Basic2Activity.class);
+            startActivity(intent);
         }else if(v.getId()==R.id.btn_basic_info){
             Intent intent=new Intent(HomeActivity.this, BasicActivity.class);
             startActivity(intent);
+        }else if(v.getId()==R.id.btn_in){
+
         }
     }
 }

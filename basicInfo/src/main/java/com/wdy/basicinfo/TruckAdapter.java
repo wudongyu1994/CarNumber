@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -13,9 +12,9 @@ import java.util.List;
 
 public class TruckAdapter extends RecyclerView.Adapter<TruckAdapter.TruckViewHolder> {
 
-    private TruckListItemClick mListItemClickListener;
+    private ListItemClick mListItemClickListener;
     List<Truck> mTruck=new ArrayList<>();
-    public TruckAdapter(List<Truck> mTruck,TruckListItemClick listener) {
+    public TruckAdapter(List<Truck> mTruck, ListItemClick listener) {
         this.mTruck=mTruck;
         this.mListItemClickListener=listener;
     }
@@ -48,10 +47,10 @@ public class TruckAdapter extends RecyclerView.Adapter<TruckAdapter.TruckViewHol
         public TruckViewHolder(@NonNull View itemView) {
             super(itemView);
             mName=itemView.findViewById(R.id.tv_name);
-            mCarNumber=itemView.findViewById(R.id.tv_car_number);
-            mLicense=itemView.findViewById(R.id.tv_car_license);
-            mCarId=itemView.findViewById(R.id.tv_car_id);
-            mAffiliation=itemView.findViewById(R.id.tv_affiliation);
+            mCarNumber=itemView.findViewById(R.id.tv_packet_number);
+            mLicense=itemView.findViewById(R.id.tv_packet_type);
+            mCarId=itemView.findViewById(R.id.tv_status);
+            mAffiliation=itemView.findViewById(R.id.tv_warehouse);
             itemView.setOnClickListener(this);
         }
 

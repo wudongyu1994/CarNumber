@@ -23,7 +23,8 @@
             >
 
         </activity>
-        <activity android:name=".ProductInfoActivity">
+        <activity android:name="com.wdy.list.ListOnTruckActivity"
+            android:configChanges="keyboardHidden|orientation">
 
         </activity>
         <activity android:name=".AddCarActivity"
@@ -32,6 +33,12 @@
 
         </activity>
         <activity android:name=".ModifyCarActivity">
+
+        </activity>
+        <activity android:name="com.wdy.list.ModifyListOnTruckActivity">
+
+        </activity>
+        <activity android:name="com.wdy.list.Basic2Activity">
 
         </activity>
     </application>
