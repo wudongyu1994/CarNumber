@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -259,14 +260,12 @@ public class CreateActivity extends AppCompatActivity implements OnClickListener
                 if (checkPermission.permissionSet(PERMISSION)) {
                     PermissionActivity.startActivityForResult(CreateActivity.this, 0, "true", PERMISSION);
                 } else {
-                    video_intent.setClass(getApplicationContext(), MemoryCameraActivity.class);
                     video_intent.putExtra("camera", true);
-                    startActivityForResult(video_intent, 4);
+                    startActivityForResult(video_intent,4);
                 }
             } else {
-                video_intent.setClass(getApplicationContext(), MemoryCameraActivity.class);
                 video_intent.putExtra("camera", true);
-                startActivityForResult(video_intent, 4);
+                startActivityForResult(video_intent,4);
             }
         } else if (v.getId()==R.id.btn_create) {
             //TODO 创建出库单
@@ -322,7 +321,8 @@ public class CreateActivity extends AppCompatActivity implements OnClickListener
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 4 && resultCode == 4) {
+        if (requestCode == 4 && (resultCode >= 4 && resultCode <=6) ) {
+            Log.d(TAG,"resultcode="+resultCode);
             final String carNumber = data.getStringExtra("number");
             boolean hasCar=false;
             int i;
@@ -334,66 +334,47 @@ public class CreateActivity extends AppCompatActivity implements OnClickListener
             }
             if(hasCar){
                 mTruck.setSelection(i);
-                Toast.makeText(this,"truck: "+i,Toast.LENGTH_SHORT).show();
             }
             else{
-                //TODO 创建卡车
-                //使用post创建新的truck
-                String url = "http://120.76.219.196:8082/ScsyERP/BasicInfo/Truck/create";
-                StringRequest requestProject = new StringRequest(Request.Method.POST, url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String s) {
-                                Log.d(TAG,s);
-                                FastJsonReturn fastJsonReturn = JSON.parseObject(s, FastJsonReturn.class);
-                                int status=fastJsonReturn.getStatus();
-                                if(status!=0){
-                                    Toast.makeText(CreateActivity.this,"\ncreate truck failed! please try again!",Toast.LENGTH_SHORT).show();
-                                }
-                                else{
-                                    //重新获取trucks，并显示最后一辆truck
-                                    String url = "http://120.76.219.196:8082/ScsyERP/BasicInfo/Truck/query";
-                                    StringRequest requestProject = new StringRequest(Request.Method.GET, url,
-                                            new Response.Listener<String>() {
-                                                @Override
-                                                public void onResponse(String s) {//s为请求返回的字符串数据
-                                                    Log.d(TAG,s);
-                                                    FastJsonReturn fastJsonReturn = JSON.parseObject(s, FastJsonReturn.class);
-                                                    JSONArray jsonArray=fastJsonReturn.getContent().getJSONArray("data");
-                                                    listTruck=JSON.parseObject(JSON.toJSONString(jsonArray),new TypeReference<ArrayList<Truck>>() {});
-                                                    truckAdapter=new TruckAdapter(listTruck,CreateActivity.this);
-                                                    mTruck.setAdapter(truckAdapter);
-                                                    mTruck.setSelection(truckAdapter.getCount()-1);
-                                                }
-                                            },
-                                            new Response.ErrorListener() {
-                                                @Override
-                                                public void onErrorResponse(VolleyError volleyError) {
-                                                    Log.e(TAG,volleyError.toString());
-                                                }
-                                            }){};
-                                    MySingleton.getInstance(CreateActivity.this).addToRequestQueue(requestProject);
-
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e(TAG,error.toString());
-                    }
-                }) {
-                    // 携带参数
-                    @Override
-                    protected HashMap<String, String> getParams()
-                            throws AuthFailureError {
-                        HashMap<String, String> hashMap = new HashMap<String, String>();
-                        hashMap.put("corporation", "1");
-                        hashMap.put("carNumber", carNumber);
-                        return hashMap;
-                    }
-                };
-                MySingleton.getInstance(this).addToRequestQueue(requestProject);
+                Intent intent=new Intent(CreateActivity.this,AddTruckActivity.class);
+                intent.putExtra("number",carNumber);
+                startActivityForResult(intent,7);
             }
+        }else if(requestCode == 7 && resultCode ==7){
+            //使用get查询车辆，并显示在recyclerVIew里面
+            String url = "http://120.76.219.196:8082/ScsyERP/BasicInfo/Truck/query";
+            StringRequest requestProject = new StringRequest(Request.Method.GET, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {//s为请求返回的字符串数据
+                            Log.d(TAG, s);
+                            FastJsonReturn fastJsonReturn = JSON.parseObject(s, FastJsonReturn.class);
+                            JSONArray jsonArray = fastJsonReturn.getContent().getJSONArray("data");
+                            listTruck = JSON.parseObject(JSON.toJSONString(jsonArray), new TypeReference<ArrayList<Truck>>() {
+                            });
+                            truckAdapter = new TruckAdapter(listTruck, CreateActivity.this);
+                            mTruck.setAdapter(truckAdapter);
+                            mTruck.setSelection(listTruck.size()-1);
+                            mTruck.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                    truckId = truckAdapter.getObjectId(i);
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> adapterView) {
+                                }
+                            });
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            Log.e(TAG, volleyError.toString());
+                        }
+                    }) {
+            };
+            MySingleton.getInstance(this).addToRequestQueue(requestProject);
         }
     }
 
@@ -404,4 +385,5 @@ public class CreateActivity extends AppCompatActivity implements OnClickListener
         }
         return super.onKeyDown(keyCode, event);
     }
+
 }

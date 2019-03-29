@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.wdy.basicinfo.R;
+import com.wdy.contract.ContractActivity;
 
 public class Basic2Activity extends AppCompatActivity {
     Button mCar,mProduct;
@@ -29,6 +30,8 @@ public class Basic2Activity extends AppCompatActivity {
         mProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent  = new Intent(Basic2Activity.this, ContractActivity.class);
+                startActivity(intent);
             }
         });
     }

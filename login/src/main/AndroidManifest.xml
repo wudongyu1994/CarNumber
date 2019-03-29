@@ -21,6 +21,9 @@
         <activity android:name=".HomeActivity">
 
         </activity>
+        <activity android:name=".Home2Activity">
+
+        </activity>
     </application>
 
 </manifest>

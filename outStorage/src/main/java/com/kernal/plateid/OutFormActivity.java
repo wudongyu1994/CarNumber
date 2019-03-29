@@ -332,14 +332,65 @@ public class OutFormActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 4 && resultCode == 4) {
-            String carNumber = data.getStringExtra("number");
-            //todo choose a car or create a car
-//            listTruck.add(carNumber);
-//            MyMethod.fillSpinner(OutFormActivity.this,mTruck,listTruck,
-//                    listTruck.size()-1);
+        if (requestCode == 4 && (resultCode >= 4 && resultCode <=6) ) {
+            Log.d(TAG,"resultcode="+resultCode);
+            final String carNumber = data.getStringExtra("number");
+            boolean hasCar=false;
+            int i;
+            for(i=0;i<listTruck.size();i++){
+                if(listTruck.get(i).getCarNumber().equals(carNumber)){
+                    hasCar=true;
+                    break;
+                }
+            }
+            if(hasCar){
+                mTruck.setSelection(i);
+            }
+            else{
+                Intent intent=new Intent(OutFormActivity.this,AddTruckActivity.class);
+                intent.putExtra("number",carNumber);
+                startActivityForResult(intent,7);
+            }
+        }else if(requestCode == 7 && resultCode ==7){
+            //使用get查询车辆，并显示在recyclerVIew里面
+            String url = "http://120.76.219.196:8082/ScsyERP/BasicInfo/Truck/query";
+            StringRequest requestProject = new StringRequest(Request.Method.GET, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {//s为请求返回的字符串数据
+                            Log.d(TAG, s);
+                            FastJsonReturn fastJsonReturn = JSON.parseObject(s, FastJsonReturn.class);
+                            JSONArray jsonArray = fastJsonReturn.getContent().getJSONArray("data");
+                            listTruck = JSON.parseObject(JSON.toJSONString(jsonArray), new TypeReference<ArrayList<Truck>>() {
+                            });
+                            truckAdapter = new TruckAdapter(listTruck, OutFormActivity.this);
+                            mTruck.setAdapter(truckAdapter);
+                            mTruck.setSelection(listTruck.size()-1);
+                            mTruck.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                    truckId = truckAdapter.getObjectId(i);
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> adapterView) {
+                                }
+                            });
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            Log.e(TAG, volleyError.toString());
+                        }
+                    }) {
+            };
+            MySingleton.getInstance(this).addToRequestQueue(requestProject);
         }
     }
+
+
+
 }
 
 

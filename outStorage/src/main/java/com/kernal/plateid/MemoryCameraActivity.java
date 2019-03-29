@@ -357,8 +357,7 @@ public class MemoryCameraActivity extends Activity {
 							.getSystemService(
 									Service.VIBRATOR_SERVICE);
 					mVibrator.vibrate(100);
-					Intent intent = new Intent(/*MemoryCameraActivity.this,
-							MemoryResultActivity.class*/);
+					Intent intent = new Intent(/*MemoryCameraActivity.this,AddTruckActivity.class*/);
 					number = fieldvalue[0];
 					color = fieldvalue[1];
 					int left = Integer.valueOf(fieldvalue[7]);
@@ -386,9 +385,9 @@ public class MemoryCameraActivity extends Activity {
 							.getSystemService(
 									Service.VIBRATOR_SERVICE);
 					mVibrator.vibrate(100);
-					Intent intent = new Intent(/*
-							MemoryCameraActivity.this,
-							MemoryResultActivity.class*/);
+					Intent intent = new Intent(
+							/*MemoryCameraActivity.this,
+							AddTruckActivity.class*/);
 					for (int i = 0; i < length; i++) {
 						itemString = fieldvalue[0];
 						itemColor = fieldvalue[1];
@@ -405,7 +404,7 @@ public class MemoryCameraActivity extends Activity {
 					intent.putExtra("recogType", recogType);
 //					MemoryCameraActivity.this.finish();
 //					startActivity(intent);
-					setResult(4,intent);
+					setResult(5,intent);
 					finish();
 				}
 			} else{
@@ -413,7 +412,7 @@ public class MemoryCameraActivity extends Activity {
 				//预览识别执行下列代码 不是预览识别 不做处理等待下一帧
 				mVibrator = (Vibrator) getApplication().getSystemService(Service.VIBRATOR_SERVICE);
 				mVibrator.vibrate(100);
-				Intent intent = new Intent(/*MemoryCameraActivity.this, MemoryResultActivity.class*/);
+				Intent intent = new Intent(/*MemoryCameraActivity.this, AddTruckActivity.class*/);
 				number = fieldvalue[0];
 				color = fieldvalue[3];
 				if (fieldvalue[0] == null) {
@@ -437,7 +436,7 @@ public class MemoryCameraActivity extends Activity {
 				intent.putExtra("recogType", recogType);
 //				MemoryCameraActivity.this.finish();
 //				startActivity(intent);
-				setResult(4,intent);
+				setResult(6,intent);
 				finish();
 			}
 	}

@@ -29,10 +29,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         SharedPreferences sharedPreferences=getSharedPreferences("login",MODE_PRIVATE);
-        String userName=sharedPreferences.getString("userName","");
-        if(!userName.isEmpty()){
-            Intent intent=new Intent(LoginActivity.this, HomeActivity.class);
-            startActivity(intent);
+        int userType=sharedPreferences.getInt("userType",-1);
+        if(userType>=0){
+            if(userType<=2){
+                Intent intent=new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }else /*if(userType==3)*/{
+                Intent intent=new Intent(LoginActivity.this, Home2Activity.class);
+                startActivity(intent);
+            }
             finish();
         }
 
@@ -61,13 +66,19 @@ public class LoginActivity extends AppCompatActivity {
 
                                     SharedPreferences sharedPreferences=getSharedPreferences("login",MODE_PRIVATE);
                                     SharedPreferences.Editor editor =sharedPreferences.edit();
-                                    editor.putString("name",content.getString("name"));
+//                                    editor.putString("name",content.getString("name"));
                                     editor.putString("phone",content.getString("phone"));
                                     editor.putString("userName",content.getString("userName"));
-                                    editor.putInt("corporation",content.getInteger("id"));
+                                    editor.putInt("corporation",content.getInteger("corporation"));
+                                    editor.putInt("userType",content.getInteger("userType"));
                                     editor.apply();
-                                    Intent intent=new Intent(LoginActivity.this, HomeActivity.class);
-                                    startActivity(intent);
+                                    if(content.getInteger("userType")==2){
+                                        Intent intent=new Intent(LoginActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                    }else if(content.getInteger("userType")==3){
+                                        Intent intent=new Intent(LoginActivity.this, Home2Activity.class);
+                                        startActivity(intent);
+                                    }
                                     finish();
                                 }
                             }

@@ -41,6 +41,12 @@
         <activity android:name="com.wdy.list.Basic2Activity">
 
         </activity>
+        <activity android:name="com.wdy.contract.ContractActivity">
+
+        </activity>
+        <activity android:name="com.wdy.contract.ModifyContractActivity">
+
+        </activity>
     </application>
 
 </manifest>

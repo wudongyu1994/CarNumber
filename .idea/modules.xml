@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/InStorage/InStorage.iml" filepath="$PROJECT_DIR$/InStorage/InStorage.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/basicInfo/basicInfo.iml" filepath="$PROJECT_DIR$/basicInfo/basicInfo.iml" />
       <module fileurl="file://$PROJECT_DIR$/login/login.iml" filepath="$PROJECT_DIR$/login/login.iml" />
       <module fileurl="file://$PROJECT_DIR$/outStorage/outStorage.iml" filepath="$PROJECT_DIR$/outStorage/outStorage.iml" />
       <module fileurl="file://$PROJECT_DIR$/plate_id_2.iml" filepath="$PROJECT_DIR$/plate_id_2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/queryWarn/queryWarn.iml" filepath="$PROJECT_DIR$/queryWarn/queryWarn.iml" />
     </modules>
   </component>
 </project>

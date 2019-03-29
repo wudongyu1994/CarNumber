@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class BasicActivity extends AppCompatActivity {
     Button mCar,mProduct;
@@ -25,6 +26,7 @@ public class BasicActivity extends AppCompatActivity {
         mProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(BasicActivity.this,"请从“入库”模块查看货物信息",Toast.LENGTH_SHORT).show();
             }
         });
     }
